@@ -1,5 +1,8 @@
 #pragma once
 #include <iostream>
+#include <string>
+
+using namespace std;
 
 class MyString
 {
@@ -8,8 +11,18 @@ class MyString
 public:
 	MyString();
 	MyString(char *str);
-	MyString(MyString str);
-	~MyString();
+	MyString(string str);
 	MyString(MyString &str);
+	~MyString();
+	int size();
+	void Clear();
+	bool empty();
+	char* c_str1();
+	void swap(MyString &str);
+	void Print();
+	//void insert(int index, MyString str);
+	//void erase(int start, int count);
+	//void replace(int start, int finish, MyString str);
+	//int find(const MyString str);
 };
 
