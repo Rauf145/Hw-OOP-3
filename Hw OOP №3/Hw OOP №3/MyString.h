@@ -22,7 +22,7 @@ public:
 	void Print();
 	void insert(int index, MyString str);
 	void erase(int start, int count);
-	//void replace(int start, int finish, MyString str);
+	void replace(int start, int finish, MyString str);
 	int find(MyString str);
 };
 

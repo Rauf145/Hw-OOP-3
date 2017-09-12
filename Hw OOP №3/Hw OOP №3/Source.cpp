@@ -11,9 +11,9 @@ void main()
 	MyString test1(str);
 	//test.swap(test1);
 //	cout << test.find(test1) << endl;;
-	test.insert(1, test1);
+	test.replace(1, 4, test1);
 	test.Print();
-	test.erase(1, 2);
+	//test.erase(1, 2);
 	//cout << test.c_str1();
 	//cout << test.size() << "\t";
 	test.Print();

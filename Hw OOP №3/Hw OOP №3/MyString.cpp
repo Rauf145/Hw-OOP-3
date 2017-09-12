@@ -128,6 +128,22 @@ void MyString::erase(int start, int count)
 	}
 }
 
+void MyString::replace(int start, int finish, MyString str)
+{
+	start--;
+	if (start >= 0 && finish < this->length)
+	{
+		for (int i = start, count = 0; i < finish, count < str.length; i++, count++)
+		{
+			this->symbol[i] = str.symbol[count];
+			if (i == finish - 1)
+				break;
+			if (i != finish && count == str.length - 1)
+				count = -1;
+		}
+	}
+}
+
 int MyString::find( MyString str)
 {
 	int counter = 0, index = 0;
