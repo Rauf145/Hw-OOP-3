@@ -24,5 +24,8 @@ public:
 	void erase(int start, int count);
 	void replace(int start, int finish, MyString str);
 	int find(MyString str);
+
+	friend MyString operator+(const MyString &str1, const MyString &str2);
+	friend MyString operator+(const MyString &str1, const char *&str2);
 };
 
