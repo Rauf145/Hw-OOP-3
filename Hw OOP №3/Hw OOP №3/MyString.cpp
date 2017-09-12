@@ -10,28 +10,32 @@ MyString::MyString(MyString &str)
 {
 	this->symbol = new char[str.length];
 	this->length = str.length;
-	memcpy(this->symbol, str.symbol, sizeof(symbol));
+	memcpy(this->symbol, str.symbol, sizeof(str.symbol));
 }
 
-MyString::~MyString()
-{
-	delete[] this->symbol;
-}
+//MyString::~MyString()
+//{
+//	delete[] this->symbol;
+//}
 
 MyString::MyString(char *str)
 {
 	int index = 0;
 	while (str[index++] != '\0'){}
-	this->symbol = new char[index];
+	this->symbol = new char[--index];
 	this->length = index;
-	memcpy(this->symbol, str, sizeof(char) * index);
+	strcpy(this->symbol, str);
 }
 
 MyString::MyString(string str)
 {
-	char * cstr = new char[str.length() + 1];
-	std::strcpy(cstr, str.c_str());
-	this->symbol = std::strtok(cstr, " ");
+	int index = 0;
+	while (str[index++] != '\0') {}
+	this->symbol = new char[--index];
+	//strcpy(this->symbol, str.c_str());
+	this->length = str.length();
+	for (int i = 0; i <= this->length; i++)
+		symbol[i] = str[i];
 }
 
 int MyString::size()
@@ -76,8 +80,69 @@ void MyString::Print()
 	cout << this->symbol << endl;
 }
 
-//void MyString::insert(int index, MyString str)
-//{
-//	MyString temp;
-//	temp.symbol = new char[this->length + str.length];
-//}
+void MyString::insert(int index, MyString str)
+{
+	char* temp;
+	index--;
+	temp = new char[this->length + str.length];
+	for (int i = 0; i <= this->length + str.length; i++)
+	{
+		if (i < index)
+			temp[i] = this->symbol[i];
+		if (i >= index + str.length)
+		{
+			temp[i] = this->symbol[i - str.length];
+		}
+		if (i >=  index && i < index + str.length)
+		{
+			temp[i] = str.symbol[i - index];
+		}
+	}
+//	cout << temp;
+	this->length += str.length;
+	//delete[] symbol;
+	strcpy(this->symbol, temp);
+}
+
+void MyString::erase(int start, int count)
+{
+	char* temp;
+	start--;
+	if (start + count < this->length && start >= 0)
+	{
+		temp = new char[this->length - count];
+		for (int i = 0; i <= this->length; i++)
+		{
+			if (i < start)
+				temp[i] = this->symbol[i];
+			if (i >= start + count)
+			{
+				temp[i - count] = this->symbol[i];
+			}
+		}
+		this->length -= count;
+		temp[this->length] = '\0';
+		//cout << temp;
+		//delete[] this->symbol;
+		strcpy(this->symbol, temp);
+	}
+}
+
+int MyString::find( MyString str)
+{
+	int counter = 0, index = 0;
+	for (int i = 0; i < this->length; i++)
+	{
+		
+		if (this->symbol[i] == str.symbol[counter])
+		{
+			if (counter == 0)
+				index = i;
+			counter++;
+		}
+		else if (this->symbol[i] != str.symbol[counter])
+			counter = 0, index = 0;
+		if (counter == str.length)
+			return index;
+	}
+}

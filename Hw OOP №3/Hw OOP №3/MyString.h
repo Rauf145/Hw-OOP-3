@@ -13,16 +13,16 @@ public:
 	MyString(char *str);
 	MyString(string str);
 	MyString(MyString &str);
-	~MyString();
+	//~MyString();
 	int size();
 	void Clear();
 	bool empty();
 	char* c_str1();
 	void swap(MyString &str);
 	void Print();
-	//void insert(int index, MyString str);
-	//void erase(int start, int count);
+	void insert(int index, MyString str);
+	void erase(int start, int count);
 	//void replace(int start, int finish, MyString str);
-	//int find(const MyString str);
+	int find(MyString str);
 };
 
