@@ -14,16 +14,16 @@ public:
 	MyString(string str);
 	MyString(MyString &str);
 	//~MyString();
-	int size();
+	int size() const;
 	void Clear();
-	bool empty();
-	char* c_str1();
+	bool empty() const;
+	char* c_str1() const;
 	void swap(MyString &str);
 	void Print();
 	void insert(int index, MyString str);
 	void erase(int start, int count);
 	void replace(int start, int finish, MyString str);
-	int find(MyString str);
+	int find(MyString str) const;
 
 	friend MyString operator+(const MyString &str1, const MyString &str2);
 	friend MyString operator+(const MyString &str1, const char *str2);

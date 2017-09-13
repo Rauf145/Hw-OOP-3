@@ -61,7 +61,7 @@ istream& operator>>(istream& in, MyString &str)
 	delete[] str.symbol;
 	string temp;
 	int index = 0;
-	in >> temp;
+	getline(in, temp);
 	while (temp[index++] != '\0') {}
 	str.symbol = new char[index];
 	for (int i = 0; i < index; i++)
@@ -88,7 +88,11 @@ void main()
 	cout << test2 << endl;
 	//test.swap(test1);
 	//cout << test2.find(test1) << endl;;
-	test1.insert(2, test2);
+	test1.insert(1, test2);
+	cout << test1 << endl;
+	test1.replace(1, 7, test2);
+	cout << test1 << endl;
+	test1.erase(1, 7);
 	cout << test1 << endl;
 	//test.Print();
 	//test.erase(1, 2);
