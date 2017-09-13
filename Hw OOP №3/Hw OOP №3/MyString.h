@@ -26,6 +26,18 @@ public:
 	int find(MyString str);
 
 	friend MyString operator+(const MyString &str1, const MyString &str2);
-	friend MyString operator+(const MyString &str1, const char *&str2);
+	friend MyString operator+(const MyString &str1, const char *str2);
+	friend MyString operator+(const char *str1, const MyString &str2);
+	friend ostream& operator<<(ostream& os, const MyString &str);
+	friend istream& operator>>(istream& in, MyString &str);
+	MyString& operator=(const char *str)
+	{
+		int index = 0;
+		while (str[index++] != '\0') {}
+		for (int i = 0; i < index; i++)
+			this->symbol[i] = str[i];
+		this->length = index - 1;
+		return *this;
+	}
 };
 
