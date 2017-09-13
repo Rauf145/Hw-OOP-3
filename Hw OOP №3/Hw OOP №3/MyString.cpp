@@ -8,9 +8,11 @@ MyString::MyString()
 
 MyString::MyString(MyString &str)
 {
-	this->symbol = new char[str.length];
+	this->symbol = new char[str.length + 1];
 	this->length = str.length;
-	memcpy(this->symbol, str.symbol, sizeof(str.symbol));
+	for (int i = 0; i <= str.length; i++)
+		this->symbol[i] = str.symbol[i];
+	this->symbol[str.length] = '\0';
 }
 
 //MyString::~MyString()
@@ -21,46 +23,46 @@ MyString::MyString(MyString &str)
 MyString::MyString(char *str)
 {
 	int index = 0;
-	while (str[index++] != '\0'){}
-	this->symbol = new char[--index];
-	this->length = index;
-	strcpy(this->symbol, str);
+	while (str[index++] != '\0') {}
+	this->symbol = new char[index];
+	this->length = index - 1;
+	for (int i = 0; i < index; i++)
+		this->symbol[i] = str[i];
 }
 
 MyString::MyString(string str)
 {
 	int index = 0;
 	while (str[index++] != '\0') {}
-	this->symbol = new char[--index];
-	//strcpy(this->symbol, str.c_str());
-	this->length = str.length();
-	for (int i = 0; i <= this->length; i++)
-		symbol[i] = str[i];
+	this->symbol = new char[index];
+	this->length = index - 1;
+	for (int i = 0; i < index; i++)
+		this->symbol[i] = str[i];
 }
 
 int MyString::size()
 {
 	return this->length;
- }
+}
 
 void MyString::Clear()
 {
 	delete[] this->symbol;
 	this->length = 0;
-	this->symbol = new char[this->length];
+	this->symbol = new char[this->length + 1];
 }
 
-bool MyString::empty()
+bool MyString::empty() const
 {
-	if (length == 0)
+	if (this->length == 0)
 		return true;
 	else
 		return false;
 }
 
-char* MyString::c_str1()
+char* MyString::c_str1() const
 {
-	return symbol;
+	return this->symbol;
 }
 
 void MyString::swap(MyString & str)
@@ -72,7 +74,7 @@ void MyString::swap(MyString & str)
 	str.symbol = temp;
 	buffer = this->length;
 	this->length = str.length;
-	str.length = this->length;
+	str.length = buffer;
 }
 
 void MyString::Print()
@@ -84,7 +86,7 @@ void MyString::insert(int index, MyString str)
 {
 	char* temp;
 	index--;
-	temp = new char[this->length + str.length];
+	temp = new char[this->length + str.length + 1];
 	for (int i = 0; i <= this->length + str.length; i++)
 	{
 		if (i < index)
@@ -93,38 +95,36 @@ void MyString::insert(int index, MyString str)
 		{
 			temp[i] = this->symbol[i - str.length];
 		}
-		if (i >=  index && i < index + str.length)
+		if (i >= index && i < index + str.length)
 		{
 			temp[i] = str.symbol[i - index];
 		}
 	}
-//	cout << temp;
 	this->length += str.length;
-	//delete[] symbol;
-	strcpy(this->symbol, temp);
+	delete[] this->symbol;
+	symbol = temp;
 }
 
 void MyString::erase(int start, int count)
 {
 	char* temp;
-	start--;
+	start--, count--;
 	if (start + count < this->length && start >= 0)
 	{
-		temp = new char[this->length - count];
-		for (int i = 0; i <= this->length; i++)
+		temp = new char[this->length - count + 1];
+		for (int i = 0; i < this->length; i++)
 		{
 			if (i < start)
 				temp[i] = this->symbol[i];
-			if (i >= start + count)
+			if (i > start + count)
 			{
-				temp[i - count] = this->symbol[i];
+				temp[i - count - 1] = this->symbol[i];
 			}
 		}
+		temp[this->length - count - 1] = '\0';
 		this->length -= count;
-		temp[this->length] = '\0';
-		//cout << temp;
-		//delete[] this->symbol;
-		strcpy(this->symbol, temp);
+		delete[] this->symbol;
+		symbol = temp;
 	}
 }
 
@@ -144,12 +144,12 @@ void MyString::replace(int start, int finish, MyString str)
 	}
 }
 
-int MyString::find( MyString str)
+int MyString::find(MyString str) const
 {
-	int counter = 0, index = 0;
+	int counter = 0, index = -1;
 	for (int i = 0; i < this->length; i++)
 	{
-		
+
 		if (this->symbol[i] == str.symbol[counter])
 		{
 			if (counter == 0)
